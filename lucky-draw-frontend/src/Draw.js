@@ -24,7 +24,7 @@ function Draw(props) {
         });
 
         props.socket.on("error", (text) => {
-           setErrorText(text);
+            setErrorText(text);
         });
 
         props.socket.emit("request-update", props.passcode);
@@ -119,42 +119,43 @@ function Draw(props) {
 
     return (
         <>
-            <h3 className="general-font" hidden={rank.length === 0}>中奖列表</h3>
-            <div className="paper container rank-list" hidden={rank.length === 0}>
-                <div className="rank-list-container">
-                    {results}
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-8 col">
-                    <div style={{width: "100%"}}>
-                        <h4 className="general-font">抽取卡片</h4>
-                        <div className="form-group">
-                            <input className="input-block general-font" type="text" placeholder="输入卡片编号"
-                                   id="rankInput" value={rankInput} onChange={handleRankInputChange}/>
+            {selection !== null
+                ?
+                <div>
+                    <h3 className="general-font" hidden={rank.length === 0}>中奖列表（{rank.length}）</h3>
+                    <div className="paper container rank-list" hidden={rank.length === 0}>
+                        <div className="rank-list-container">
+                            {results}
                         </div>
-                        <button className="btn-block btn-primary general-font"
-                                onClick={handleNewRank}>从卡片池抽取上面这张卡片
-                        </button>
-                        <p className="text-danger general-font" hidden={errorText === ""}>{errorText}</p>
                     </div>
-                </div>
-                <div className="col-4 col all-center">
-                    <div>
-                        <h4 className="general-font">最近抽取的卡片</h4>
-                        {results.findLast(() => true)}
+                    <div className="row">
+                        <div className="col-8 col">
+                            <div style={{width: "100%"}}>
+                                <h4 className="general-font">抽取卡片</h4>
+                                <div className="form-group">
+                                    <input className="input-block general-font" type="text" placeholder="输入卡片编号"
+                                           id="rankInput" value={rankInput} onChange={handleRankInputChange}/>
+                                </div>
+                                <button className="btn-block btn-primary general-font"
+                                        onClick={handleNewRank}>从卡片池抽取上面这张卡片
+                                </button>
+                                <p className="text-danger general-font" hidden={errorText === ""}>{errorText}</p>
+                            </div>
+                        </div>
+                        <div className="col-4 col all-center">
+                            <div>
+                                <h4 className="general-font">最近抽取的卡片</h4>
+                                {results.findLast(() => true)}
+                            </div>
+                        </div>
                     </div>
+                    <h3 className="general-font"
+                        hidden={rank.length === 0}>剩余卡片池（{selection.length - rank.length}）</h3>
+                    {cards}
                 </div>
-            </div>
-            <h3 className="general-font" hidden={rank.length === 0}>剩余卡片池</h3>
-            <div>
-                {selection !== null
-                    ?
-                    cards
-                    :
-                    <div className="alert alert-secondary full-width">正在加载卡片列表……</div>
-                }
-            </div>
+                :
+                <div className="alert alert-secondary full-width">正在加载卡片列表……</div>
+            }
         </>
     );
 }
