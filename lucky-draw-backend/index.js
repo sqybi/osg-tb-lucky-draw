@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
 
     socket.on("new-rank", (passcode, id) => {
         const status = passcode in admins;
-        if (status && !isNaN(id)) {
+        if (status && !isNaN(id) && id !== null) {
             if (id < 0 || id >= selection.length) {
                 socket.emit("error", `卡片 ${id} 的编号不在合法范围 [0, ${selection.length - 1}]！`)
             } else if (rank.includes(id)) {

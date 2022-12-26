@@ -113,6 +113,7 @@ function Draw(props) {
     };
 
     const handleNewRank = () => {
+        setWaiting(true);
         setErrorText("");
         props.socket.emit("new-rank", props.passcode, parseInt(rankInput));
     };
@@ -134,9 +135,10 @@ function Draw(props) {
                                 <h4 className="general-font">抽取卡片</h4>
                                 <div className="form-group">
                                     <input className="input-block general-font" type="text" placeholder="输入卡片编号"
-                                           id="rankInput" value={rankInput} onChange={handleRankInputChange}/>
+                                           id="rankInput" value={rankInput} onChange={handleRankInputChange}
+                                           disabled={waiting}/>
                                 </div>
-                                <button className="btn-block btn-primary general-font"
+                                <button className="btn-block btn-primary general-font" disabled={waiting}
                                         onClick={handleNewRank}>从卡片池抽取上面这张卡片
                                 </button>
                                 <p className="text-danger general-font" hidden={errorText === ""}>{errorText}</p>
