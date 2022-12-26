@@ -1,0 +1,26 @@
+{
+  "name": "lucky-draw-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lucky draw for OSG team building",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sqybi/osg-tb-lucky-draw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sqybi/osg-tb-lucky-draw/issues"
+  },
+  "homepage": "https://github.com/sqybi/osg-tb-lucky-draw#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "lowdb": "^5.0.5",
+    "socket.io": "^4.5.4"
+  }
+}

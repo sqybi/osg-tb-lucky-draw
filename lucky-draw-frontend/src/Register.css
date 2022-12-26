@@ -1,0 +1,14 @@
+.card-width {
+    width: 200px;
+}
+
+.btn-font {
+    font-family: "Neucha", "Smiley Sans", sans-serif;
+    font-size: 14px;
+}
+
+.error {
+    position: fixed;
+    top: 20px;
+    width: 100%;
+}

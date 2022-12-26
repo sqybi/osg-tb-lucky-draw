@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+  font-family: "Neucha", "Smiley Sans", sans-serif;
+  height: 100vh;
+}
+
+.vertical-mid {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translate(0, -50%);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #edeceb;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cdcccb;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #adacab;
+}

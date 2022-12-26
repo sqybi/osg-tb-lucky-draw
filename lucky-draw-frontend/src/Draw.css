@@ -1,0 +1,29 @@
+.rank-list {
+    overflow: auto;
+    margin-bottom: 50px;
+}
+
+.rank-list-container {
+    width: max-content;
+}
+
+.rank-card {
+    float: left;
+    margin-right: 20px;
+}
+
+.card-text-font {
+    font-family: "Neucha", "Smiley Sans", sans-serif;
+    font-size: 18px;
+}
+
+.general-font {
+    font-family: "Neucha", "Smiley Sans", sans-serif;
+}
+
+.all-center {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
