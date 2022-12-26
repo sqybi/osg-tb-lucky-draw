@@ -79,6 +79,7 @@ io.on("connection", (socket) => {
 
     socket.on("new-rank", (passcode, id) => {
         const status = passcode in admins;
+        let emitted = false;
         if (status && !isNaN(id) && id !== null) {
             if (id < 0 || id >= selection.length) {
                 socket.emit("error", `卡片 ${id} 的编号不在合法范围 [0, ${selection.length - 1}]！`)
@@ -87,6 +88,7 @@ io.on("connection", (socket) => {
             } else {
                 rank.push(id);
                 db.write();
+                emitted = true;
                 io.emit("update", {
                     status: true,
                     users: users,
@@ -94,6 +96,14 @@ io.on("connection", (socket) => {
                     rank: rank,
                 });
             }
+        }
+        if (!emitted) {
+            socket.emit("update", {
+                status: false,
+                users: null,
+                selection: null,
+                rank: []
+            })
         }
     });
 });

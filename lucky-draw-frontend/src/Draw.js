@@ -13,13 +13,11 @@ function Draw(props) {
 
     useEffect(() => {
         props.socket.on("update", (data) => {
-            console.log(data);
-            if (!data.status) {
-                return;
+            if (data.status) {
+                setUsers(data.users);
+                setSelection(data.selection);
+                setRank(data.rank);
             }
-            setUsers(data.users);
-            setSelection(data.selection);
-            setRank(data.rank);
             setWaiting(false);
         });
 
