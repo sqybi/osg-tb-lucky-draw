@@ -1,12 +1,16 @@
 import http from "node:http";
+import compression from "compression";
+import express from "express";
+import helmet from "helmet";
 import {Server} from "socket.io";
 import {LowSync} from "lowdb";
 import {dirname, join} from "node:path";
 import {fileURLToPath} from "node:url";
 import {JSONFileSync} from "lowdb/node";
 
-// Socket.io server
-const server = http.createServer();
+// Socket.io server and Express server
+const app = express();
+const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -14,12 +18,24 @@ const io = new Server(server, {
     }
 });
 
+// Static files
+app.use(helmet());
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "script-src": ["'self'"],
+            upgradeInsecureRequests: null
+        },
+    })
+);
+app.use(compression());
+app.use(express.static('public'));
+
 // LowDB database
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const file = join(__dirname, "data.json");
+const file = join(__dirname, "database/data.json");
 const adapter = new JSONFileSync(file);
 const db = new LowSync(adapter);
-
 
 // Data
 db.read();

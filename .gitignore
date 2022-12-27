@@ -108,3 +108,6 @@ data.json
 
 # IDEs
 .idea/
+
+# Build files
+lucky-draw-backend/public/
