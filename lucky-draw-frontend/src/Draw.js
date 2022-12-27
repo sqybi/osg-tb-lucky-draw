@@ -10,6 +10,7 @@ function Draw(props) {
     const [rank, setRank] = useState([]);
     const [rankInput, setRankInput] = useState("");
     const [errorText, setErrorText] = useState("");
+    const [registerStatus, setRegisterStatus] = useState(true);
 
     useEffect(() => {
         props.socket.on("update", (data) => {
@@ -21,6 +22,10 @@ function Draw(props) {
             setWaiting(false);
         });
 
+        props.socket.on("register-status-update", (status) => {
+            setRegisterStatus(status);
+        });
+
         props.socket.on("error", (text) => {
             setErrorText(text);
         });
@@ -29,6 +34,7 @@ function Draw(props) {
 
         return () => {
             props.socket.off("update");
+            props.socket.off("register-status-update");
             props.socket.off("error");
             setSelection(null);
         };
@@ -116,6 +122,12 @@ function Draw(props) {
         props.socket.emit("new-rank", props.passcode, parseInt(rankInput));
     };
 
+    const handleRegisterSwitchChange = (event) => {
+        const status = event.target.checked;
+        setRegisterStatus(status);
+        props.socket.emit("register-status", status);
+    };
+
     return (
         <>
             {selection !== null
@@ -152,6 +164,16 @@ function Draw(props) {
                     <h3 className="general-font"
                         hidden={rank.length === 0}>剩余卡片池（{selection.length - rank.length}）</h3>
                     {cards}
+                    <fieldset className="form-group">
+                        <label htmlFor="registerSwitch" className="paper-switch-2-label">
+                            开启/关闭选卡环节
+                        </label>
+                        <label className="paper-switch-2">
+                            <input id="registerSwitch" name="registerSwitch" type="checkbox" checked={registerStatus}
+                                   onChange={handleRegisterSwitchChange} />
+                            <span className="paper-switch-slider round"></span>
+                        </label>
+                    </fieldset>
                 </div>
                 :
                 <div className="alert alert-secondary full-width">正在加载卡片列表……</div>

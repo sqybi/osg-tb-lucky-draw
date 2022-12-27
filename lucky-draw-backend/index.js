@@ -122,6 +122,12 @@ io.on("connection", (socket) => {
             })
         }
     });
+
+    socket.on("register-status", (status) => {
+        db.data.register = status;
+        db.write();
+        io.emit("register-status-update", db.data.register);
+    });
 });
 
 // Start HTTP server

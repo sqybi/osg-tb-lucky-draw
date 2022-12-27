@@ -7,6 +7,7 @@ function Register(props) {
     const [waiting, setWaiting] = useState(false);
     const [users, setUsers] = useState({});
     const [selection, setSelection] = useState(null);
+    const [registerStatus, setRegisterStatus] = useState(true);
 
     useEffect(() => {
         props.socket.on("update", (data) => {
@@ -18,10 +19,15 @@ function Register(props) {
             setWaiting(false);
         });
 
+        props.socket.on("register-status-update", (status) => {
+            setRegisterStatus(status);
+        });
+
         props.socket.emit("request-update", props.passcode);
 
         return () => {
             props.socket.off("update");
+            props.socket.off("register-status-update");
             setSelection(null);
         };
     }, []);
@@ -95,11 +101,11 @@ function Register(props) {
 
     return (
         <>
-            {selection !== null
-                ?
-                items
-                :
-                <div className="alert alert-secondary full-width">正在加载卡片列表……</div>
+            {registerStatus
+                ? (selection !== null
+                    ? items
+                    : <div className="alert alert-secondary full-width">正在加载卡片列表……</div>)
+                : <div className="alert alert-warning full-width">卡片选择环节已经结束！</div>
             }
         </>
     );
