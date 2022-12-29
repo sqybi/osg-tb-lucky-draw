@@ -62,6 +62,7 @@ io.on("connection", (socket) => {
             selection: status ? selection : null,
             rank: status ? rank : null,
         });
+        io.emit("register-status-update", db.data.register);
     });
 
     socket.on("select", (passcode, id) => {
@@ -75,6 +76,7 @@ io.on("connection", (socket) => {
                     selection: selection,
                     rank: rank,
                 });
+                io.emit("register-status-update", db.data.register);
                 return;
             }
             for (const i in selection) {
@@ -90,6 +92,7 @@ io.on("connection", (socket) => {
                 selection: selection,
                 rank: rank,
             });
+            io.emit("register-status-update", db.data.register);
         }
     });
 
@@ -111,6 +114,7 @@ io.on("connection", (socket) => {
                     selection: selection,
                     rank: rank,
                 });
+                io.emit("register-status-update", db.data.register);
             }
         }
         if (!emitted) {
@@ -120,6 +124,7 @@ io.on("connection", (socket) => {
                 selection: null,
                 rank: []
             })
+            io.emit("register-status-update", db.data.register);
         }
     });
 
