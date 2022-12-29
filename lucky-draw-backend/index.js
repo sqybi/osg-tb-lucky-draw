@@ -56,13 +56,13 @@ io.on("connection", (socket) => {
 
     socket.on("request-update", (passcode) => {
         const status = passcode in passcodes;
+        io.emit("register-status-update", db.data.register);
         socket.emit("update", {
             status: status,
             users: status ? users : null,
             selection: status ? selection : null,
             rank: status ? rank : null,
         });
-        io.emit("register-status-update", db.data.register);
     });
 
     socket.on("select", (passcode, id) => {
@@ -70,13 +70,13 @@ io.on("connection", (socket) => {
         if (status) {
             if (selection[id] !== "") {
                 socket.emit("error", "卡片已被其他人选择，请重新选择卡片！");
+                io.emit("register-status-update", db.data.register);
                 io.emit("update", {
                     status: status,
                     users: users,
                     selection: selection,
                     rank: rank,
                 });
-                io.emit("register-status-update", db.data.register);
                 return;
             }
             for (const i in selection) {
@@ -86,13 +86,13 @@ io.on("connection", (socket) => {
             }
             selection[id] = passcode;
             db.write();
+            io.emit("register-status-update", db.data.register);
             io.emit("update", {
                 status: true,
                 users: users,
                 selection: selection,
                 rank: rank,
             });
-            io.emit("register-status-update", db.data.register);
         }
     });
 
@@ -108,23 +108,23 @@ io.on("connection", (socket) => {
                 rank.push(id);
                 db.write();
                 emitted = true;
+                io.emit("register-status-update", db.data.register);
                 io.emit("update", {
                     status: true,
                     users: users,
                     selection: selection,
                     rank: rank,
                 });
-                io.emit("register-status-update", db.data.register);
             }
         }
         if (!emitted) {
+            io.emit("register-status-update", db.data.register);
             socket.emit("update", {
                 status: false,
                 users: null,
                 selection: null,
                 rank: []
             })
-            io.emit("register-status-update", db.data.register);
         }
     });
 
