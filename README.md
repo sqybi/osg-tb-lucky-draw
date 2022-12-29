@@ -1,2 +1,6 @@
-# osg-tb-lucky-draw
-Lucky draw for OSG team building
+# OSG TB Lucky Draw
+Lucky draw tool for Tusen OSG team building.
+
+## Screenshots
+
+(TBD)
